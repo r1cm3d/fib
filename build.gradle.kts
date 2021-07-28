@@ -11,6 +11,7 @@ repositories {
 val quarkusPlatformGroupId: String by project
 val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
+val hamcrestVersion: String by project
 
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
@@ -20,6 +21,7 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    testImplementation("org.hamcrest:hamcrest:${hamcrestVersion}")
 }
 
 group = "com.github.r1cm3d"
