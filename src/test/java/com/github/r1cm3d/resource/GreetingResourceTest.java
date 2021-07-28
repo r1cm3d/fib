@@ -1,4 +1,4 @@
-package com.github.r1cm3d;
+package com.github.r1cm3d.resource;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;

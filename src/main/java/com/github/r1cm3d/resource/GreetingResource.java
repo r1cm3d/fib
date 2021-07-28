@@ -1,4 +1,4 @@
-package com.github.r1cm3d;
+package com.github.r1cm3d.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

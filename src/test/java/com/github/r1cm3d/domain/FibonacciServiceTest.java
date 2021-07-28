@@ -1,4 +1,4 @@
-package com.github.r1cm3d;
+package com.github.r1cm3d.domain;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,8 +19,6 @@ class FibonacciServiceTest {
     @ParameterizedTest
     @MethodSource("setup")
     void calc(int act, BigInteger exp) {
-        final BigInteger x = new BigInteger("123");
-
         assertThat(FibonacciService.calc(act), is(equalTo(exp)));
     }
 

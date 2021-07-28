@@ -1,4 +1,4 @@
-package com.github.r1cm3d;
+package com.github.r1cm3d.domain;
 
 import java.math.BigInteger;
 

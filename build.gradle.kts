@@ -18,7 +18,7 @@ dependencies {
     implementation("io.quarkus:quarkus-mutiny")
     implementation("io.quarkus:quarkus-vertx")
     implementation("io.quarkus:quarkus-arc")
-    implementation("io.quarkus:quarkus-resteasy")
+    implementation("io.quarkus:quarkus-resteasy-reactive")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
     testImplementation("org.hamcrest:hamcrest:${hamcrestVersion}")
