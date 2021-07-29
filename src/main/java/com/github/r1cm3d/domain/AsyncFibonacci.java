@@ -8,12 +8,12 @@ import java.time.Duration;
 import static io.smallrye.mutiny.infrastructure.Infrastructure.getDefaultExecutor;
 import static java.time.Duration.ofMillis;
 
-public final class AsyncFibonacciService {
+public final class AsyncFibonacci {
 
     private static final Duration DEFAULT_TIMEOUT = ofMillis(800);
     private static final int LARGE_NUMBER_THRESHOLD = 4000000;
 
-    private AsyncFibonacciService() {}
+    private AsyncFibonacci() {}
 
     public static Uni<String> calc(int n) {
         return (n >= LARGE_NUMBER_THRESHOLD) ? blockingCalc(n) : nonBlockingCalc(n);
@@ -22,7 +22,7 @@ public final class AsyncFibonacciService {
     static Uni<String> blockingCalc(int n) {
         return Uni.createFrom()
                 .item(n)
-                .map(FibonacciService::calc)
+                .map(Fibonacci::calc)
                 .runSubscriptionOn(getDefaultExecutor())
                 .map(BigInteger::toString);
     }
@@ -30,7 +30,7 @@ public final class AsyncFibonacciService {
     static Uni<String> nonBlockingCalc(int n) {
         return Uni.createFrom()
                 .item(n)
-                .map(FibonacciService::calc)
+                .map(Fibonacci::calc)
                 .ifNoItem().after(DEFAULT_TIMEOUT).fail()
                 .map(BigInteger::toString);
     }

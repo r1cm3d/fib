@@ -7,15 +7,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-public class GreetingResourceTest {
+class FibonacciTest {
 
     @Test
-    public void testHelloEndpoint() {
+    void fib() {
         given()
-          .when().get("/hello")
+          .when().get("/fib?n=15")
           .then()
              .statusCode(200)
-             .body(is("Hello RESTEasy"));
+             .body(is("610"));
     }
-
 }

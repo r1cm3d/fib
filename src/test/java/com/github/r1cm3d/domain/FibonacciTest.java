@@ -14,12 +14,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class FibonacciServiceTest {
+class FibonacciTest {
 
     @ParameterizedTest
     @MethodSource("setup")
     void calc(int act, BigInteger exp) {
-        assertThat(FibonacciService.calc(act), is(equalTo(exp)));
+        assertThat(Fibonacci.calc(act), is(equalTo(exp)));
     }
 
     private static Stream<Arguments> setup() {

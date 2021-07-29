@@ -5,12 +5,12 @@ import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.helpers.test.UniAssertSubscriber;
 import org.junit.jupiter.api.Test;
 
-class AsyncFibonacciServiceTest {
+class AsyncFibonacciTest {
 
     @Test
     void shouldHandleLargeIntNumber() {
         final int MAX_TESTED_ON_MY_MACHINE = 4000000;
-        Uni<String> uni = AsyncFibonacciService.blockingCalc(MAX_TESTED_ON_MY_MACHINE);
+        Uni<String> uni = AsyncFibonacci.blockingCalc(MAX_TESTED_ON_MY_MACHINE);
 
         UniAssertSubscriber<String> subscriber = uni.subscribe().withSubscriber(UniAssertSubscriber.create());
 
@@ -20,7 +20,7 @@ class AsyncFibonacciServiceTest {
     @Test
     void shouldFailedWithTimeoutAfterOneSecond() {
         final int LARGE_NUMBER_WHICH_FAILS_LOCALLY = 10520000;
-        Uni<String> uni = AsyncFibonacciService.nonBlockingCalc(LARGE_NUMBER_WHICH_FAILS_LOCALLY);
+        Uni<String> uni = AsyncFibonacci.nonBlockingCalc(LARGE_NUMBER_WHICH_FAILS_LOCALLY);
 
         UniAssertSubscriber<String> subscriber = uni.subscribe().withSubscriber(UniAssertSubscriber.create());
 

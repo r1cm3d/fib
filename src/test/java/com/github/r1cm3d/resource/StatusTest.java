@@ -7,14 +7,15 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class FibonacciResourceTest {
+class StatusTest {
 
     @Test
-    void fib() {
+    void ok() {
         given()
-          .when().get("/fib?n=15")
+          .when().get("/status")
           .then()
              .statusCode(200)
-             .body(is("610"));
+             .body(is("OK"));
     }
+
 }

@@ -5,11 +5,11 @@ import java.math.BigInteger;
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 
-final class FibonacciService {
+final class Fibonacci {
 
     private static final int CUTOFF = 1536;
 
-    private FibonacciService() {
+    private Fibonacci() {
     }
 
     /**
