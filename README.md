@@ -1,54 +1,81 @@
-# fib Project
+# fib
+This containerized reactive RESTful API implements an efficient Θ(log.n) fibonacci algorithm using Quarkus framework
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Table of Contents
+* [TL;DR](#tldr)
+* [Prerequisites](#prerequisites)
+    * [To run](#to-run-in-docker-container)
+    * [To develop](#to-run-locally)
+* [Test](#test)
+    * [Unit Test](#unit-test)
+    * [Large n argument](#large-n-argument)
+* [Deploy](#deploy)
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
-
-## Running the application in dev mode
-
-You can run your application in dev mode that enables live coding using:
-```shell script
-./gradlew quarkusDev
+### TLDR
+``` shell
+./configure
 ```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
-
-## Packaging and running the application
-
-The application can be packaged using:
-```shell script
-./gradlew build
+Configure will check if all prerequisites are installed. It uses `command` application.
+See: **Important Disclaimer** at the top of the [configure](scripts/configure.sh) file for troubleshooting.
+``` shell
+make && make install
 ```
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
+To assemble Docker container and create executable file (just an alias for `docker run` command).
+``` shell
+./fib
 ```
-
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native
+The output should be:
+``` shell
+exec java -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -XX:+ExitOnOutOfMemoryError -cp . -jar /deployments/quarkus-run.jar
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2021-07-29 18:40:32,968 INFO  [io.quarkus] (main) fib 0.0.1-SNAPSHOT on JVM (powered by Quarkus 2.0.3.Final) started in 0.996s. Listening on: http://0.0.0.0:8080
+2021-07-29 18:40:32,970 INFO  [io.quarkus] (main) Profile prod activated.
+2021-07-29 18:40:32,970 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy-reactive, smallrye-context-propagation, vertx]
 ```
+Running on [Bash](https://www.gnu.org/software/bash/)
+![](img/tldr.gif)
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
+### Prerequisites
+![Make 4.2.1](img/make)
+![Docker 20.10.2](img/docker)
+![OpenJDK 11](img/java)
+![Minikube 1.22.0](img/minikube)
+![Kubectl 1.18.3](img/kubectl)
+
+#### To run in Docker container
+You only need [Make](https://www.gnu.org/software/make/) (tested with GNU Make 4.2.1, but it should work on others)
+and [Docker](https://www.docker.com/) (tested with Docker version 20.10.2, build 2291f61)  installed. It is important to give execution permission for `scripts/`:
+``` shell
+chmod +x scripts/
 ```
+They are safe, but you could check it out if you don't believe me. :smile:
+#### To run locally
+``` shell
+make run-local
+```
+It will build locally and run using `java` executable. (Must have a JVM installed)
 
-You can then execute your native executable with: `./build/fib-0.0.1-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
-
-## Provided Code
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+### Test
+#### Unit test
+``` shell
+make test
+```
+#### Large n argument
+``` shell
+[r1cm3d]@[PISMOWL114]:~/dev/projects/fib
+> (main) $ time curl http://localhost:8080/fib?n=70000000
+a lot of numbers...
+real    3m18,691s
+user    0m0,018s
+sys     0m0,167s
+```
+### Deploy
+``` shell
+make start-k8s && make deploy-k8s
+```
+It will start `minikube` and deploy `fib` application and `fib_hpa` which is an autoscaler based on CPU 
+and memory utilization. Autoscaler is need to be compliance with scale requirement based on workload.
+![](img/deploy.gif)

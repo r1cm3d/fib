@@ -33,7 +33,7 @@ clean:
 	@echo "\nRemove fib image"
 	-@docker rmi quarkus/fib 2>/dev/null || echo "\nDocker image fib not found to remove\n"
 
-start-k8s:
+start-k8s: stop-k8s
 	@echo "\nStarting k8s cluster"
 	-@minikube start 2>/dev/null || echo "\nMinikube not started\n"
 
