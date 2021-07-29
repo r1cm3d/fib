@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fib-deployment
+  labels:
+    app: fib
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fib
+  template:
+    metadata:
+      labels:
+        app: fib
+    spec:
+      containers:
+        - name: fib
+          image: quarkus/fib
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 800m
+              memory: 800mi
