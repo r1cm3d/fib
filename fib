@@ -1,0 +1,5 @@
+	#!/usr/bin/sh
+	docker run --interactive \
+	  --rm \
+	  -p 8080:8080 \
+		quarkus/fib
