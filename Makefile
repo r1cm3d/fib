@@ -10,6 +10,10 @@ build:
 	@echo "\nBuilding application"
 	@./gradlew build -Dquarkus.package.type=uber-jar
 
+run-local: build
+	@echo "\nRunning without containerization"
+	@java -jar build/quarkus-app/quarkus-run.jar
+
 assemble: clean
 	@echo "\nCreating Docker container"
 	@docker build --tag quarkus/fib .
