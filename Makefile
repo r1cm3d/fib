@@ -32,3 +32,23 @@ clean:
 	-@rm fib 2>/dev/null || echo "\nExecutable file fib not found to remove"
 	@echo "\nRemove fib image"
 	-@docker rmi quarkus/fib 2>/dev/null || echo "\nDocker image fib not found to remove\n"
+
+start-k8s:
+	@echo "\nStarting k8s cluster"
+	-@minikube start 2>/dev/null || echo "\nMinikube not started\n"
+
+stop-k8s:
+	@echo "\nStopping k8s cluster"
+	-@minikube stop 2>/dev/null || echo "\nMinikube not stopped\n"
+
+deploy-k8s:
+	@echo "\nDeploy fib application"
+	-@kubectl apply -f fib.yaml 2>/dev/null || echo "\nDeployment of fib not started\n"
+	@echo "\nDeploy fib autoscaler"
+	-@kubectl apply -f fib_hpa.yaml 2>/dev/null || echo "\nDeployment of fib autoscaler not started\n"
+
+clean-k8s:
+	@echo "\nDeleting fib application"
+	-@kubectl delete deployment/fib-deployment 2>/dev/null || echo "\nfib not deleted\n"
+	@echo "\nDeleting fib autoscaler"
+	-@kubectl delete horizontalpodautoscaler/fib-hpa 2>/dev/null || echo "\nfib-hpa autoscaler not deleted\n"

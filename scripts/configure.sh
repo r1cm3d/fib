@@ -26,4 +26,6 @@ check() {
 check "make" || printf "\nPlease install %bMake%b without %bMake%b is impossible to build this application\n" "$cyn" "$end" "$cyn" "$end"
 check "java" || printf "\nPlease install %bJRE%b to run this application without containerization\n" "$cyn" "$end"
 check "docker" || printf "\nPlease install %bDocker%b to containerize this application\n" "$cyn" "$end"
+check "minikube" || printf "\nPlease install %bminikube%b to setup k8s cluster locally\n" "$cyn" "$end"
+check "kubectl" || printf "\nPlease install %kubectl%b to manage k8s cluster\n" "$cyn" "$end"
 printf "\nAll setup. Run %bmake%b to assemble %bDocker%b container\n" "$yel" "$end" "$cyn" "$end"
